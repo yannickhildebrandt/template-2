@@ -6,6 +6,12 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  
+  /* BPMN Diagram Theming */
+  --diagram-bg-color: #ffffff;
+  --diagram-stroke-color: #000000;
+  --diagram-fill-color: #f7fafc;
+  --diagram-text-color: #1a202c;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,6 +30,43 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+.theme-dark .djs-container svg {
+  background-color: var(--diagram-bg-color) !important;
+}
+
+.theme-dark .djs-shape .djs-visual path,
+.theme-dark .djs-shape .djs-visual polyline,
+.theme-dark .djs-connection .djs-visual path {
+  stroke: var(--diagram-stroke-color) !important;
+}
+
+.theme-dark .djs-shape .djs-visual rect, 
+.theme-dark .djs-shape .djs-visual circle,
+.theme-dark .djs-shape .djs-visual polygon {
+  fill: var(--diagram-fill-color) !important;
+  stroke: var(--diagram-stroke-color) !important;
+}
+
+.theme-dark .djs-label text {
+  fill: var(--diagram-text-color) !important;
+}
+
+.shadow-inner-dark {
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Custom animation for the copy message */
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(20px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-20px); }
+}
+
+.fade-in-out {
+  animation: fadeInOut 3s ease-in-out forwards;
 }
 
 @layer utilities {
