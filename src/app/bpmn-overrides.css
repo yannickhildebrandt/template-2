@@ -1,0 +1,589 @@
+/* Zurücksetzen auf einfaches CSS ohne Import der BPMN-Fonts */
+@import 'bpmn-js/dist/assets/diagram-js.css';
+@import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
+
+/* Einfache Basisstile */
+:root {
+  --palette-width: 46px;
+  --bpmn-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
+/* BPMN Text Labels - Verhindert das Übereinanderlegen der Schrift */
+.djs-label {
+  font-family: var(--bpmn-font-family) !important;
+  font-size: 12px !important;
+  fill: #333 !important;
+  color: #333 !important;
+  font-weight: normal !important;
+  paint-order: stroke !important;
+  stroke: none !important;
+  text-rendering: geometricPrecision !important;
+}
+
+.bpmn-label {
+  font-family: var(--bpmn-font-family) !important;
+  font-size: 12px !important;
+  font-weight: normal !important;
+  paint-order: stroke !important;
+  stroke: none !important;
+}
+
+text.djs-label {
+  font-family: var(--bpmn-font-family) !important;
+  font-size: 12px !important;
+  font-weight: normal !important;
+  paint-order: stroke !important;
+  stroke: none !important;
+  text-rendering: geometricPrecision !important;
+}
+
+.djs-label-name {
+  font-family: var(--bpmn-font-family) !important;
+  font-size: 12px !important;
+  font-weight: normal !important;
+  paint-order: stroke !important;
+  stroke: none !important;
+}
+
+/* Speziell für Aktivitäten (Tasks) */
+.djs-shape text.djs-label {
+  font-weight: normal !important;
+  letter-spacing: 0.2px !important;
+  dominant-baseline: central !important;
+  text-anchor: middle !important;
+}
+
+/* Verhindert Schatten oder Mehrfach-Rendering */
+.bpmn-icon-task + text,
+[data-element-id*="Task"] text,
+.djs-type-bpmn-task text,
+.djs-shape.bpmn-icon-task text {
+  font-weight: normal !important;
+  paint-order: stroke !important;
+  stroke: none !important;
+  letter-spacing: 0.2px !important;
+}
+
+/* Text in Shapes - Grundlegende Regeln */
+.djs-shape text {
+  font-family: var(--bpmn-font-family) !important;
+  font-size: 12px !important;
+  fill: #333 !important;
+  font-weight: normal !important;
+  paint-order: stroke !important;
+  stroke: none !important;
+  text-rendering: geometricPrecision !important;
+}
+
+/* Zusätzliche Fixes für Text-Darstellung */
+.djs-container svg text {
+  font-weight: normal !important;
+  text-shadow: none !important;
+}
+
+/* Fixes für SVG-Text */
+svg text {
+  paint-order: stroke !important;
+  stroke: none !important;
+  text-rendering: geometricPrecision !important;
+}
+
+/* Editor Container */
+.bpmn-editor-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  overflow: auto;
+  font-family: var(--bpmn-font-family);
+}
+
+/* Canvas Darstellung */
+#canvas {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 60px); /* Header abziehen */
+  min-height: 700px;
+  overflow: hidden;
+}
+
+/* Standard BPMN.js Klassen - nicht überschreiben, nur ergänzen */
+.djs-container {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  height: 100% !important;
+  font-family: var(--bpmn-font-family) !important;
+}
+
+/* Elemente korrekt anzeigen */
+.djs-element {
+  position: absolute;
+  width: auto;
+  height: auto;
+  text-align: center;
+}
+
+/* BPMN-Elemente besser darstellen */
+.bpmn-icon-task rect {
+  fill: white !important;
+  stroke: black !important;
+  stroke-width: 2px !important;
+}
+
+.bpmn-icon-start-event-none circle {
+  fill: white !important;
+  stroke: black !important;
+  stroke-width: 2px !important;
+}
+
+.bpmn-icon-end-event-none circle {
+  fill: white !important;
+  stroke: black !important;
+  stroke-width: 2px !important;
+}
+
+/* Palette links - verbesserte Version */
+.djs-palette {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  background: #f8f8f8 !important;
+  border-right: 1px solid #ccc !important;
+  width: 46px !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+  z-index: 10 !important;
+  box-sizing: border-box !important;
+  padding: 5px 0 !important;
+}
+
+/* Palette-Gruppen - verbessert */
+.djs-palette .group {
+  margin: 5px 0 !important;
+  width: 100% !important;
+  padding: 0 0 6px 0 !important;
+  overflow: hidden !important;
+  border-bottom: 1px solid #ddd !important;
+  box-sizing: border-box !important;
+}
+
+.djs-palette .group:last-child {
+  border-bottom: none !important;
+}
+
+/* Palette-Einträge - verbessert */
+.djs-palette .entry {
+  float: none !important;
+  cursor: pointer !important;
+  width: 32px !important;
+  height: 32px !important;
+  margin: 2px auto !important;
+  border-radius: 3px !important;
+  border: 1px solid transparent !important;
+  display: block !important;
+  padding: 3px !important;
+  box-sizing: border-box !important;
+  font-size: 24px !important;
+  line-height: 24px !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  position: relative !important;
+}
+
+.djs-palette .entry:hover {
+  border: 1px solid #999 !important;
+  background-color: #f6f6f6 !important;
+}
+
+/* Spezifische Anpassungen für Palette-Icons */
+.djs-palette .entry.bpmn-icon-hand-tool,
+.djs-palette .entry.bpmn-icon-lasso-tool,
+.djs-palette .entry.bpmn-icon-space-tool,
+.djs-palette .entry.bpmn-icon-connection-multi,
+.djs-palette .entry.bpmn-icon-start-event-none,
+.djs-palette .entry.bpmn-icon-intermediate-event-none,
+.djs-palette .entry.bpmn-icon-end-event-none,
+.djs-palette .entry.bpmn-icon-gateway-none,
+.djs-palette .entry.bpmn-icon-task,
+.djs-palette .entry.bpmn-icon-subprocess-expanded,
+.djs-palette .entry.bpmn-icon-data-object,
+.djs-palette .entry.bpmn-icon-data-store,
+.djs-palette .entry.bpmn-icon-participant,
+.djs-palette .entry.bpmn-icon-group {
+  font-size: 20px !important;
+  line-height: 24px !important;
+  text-align: center !important;
+  color: #333 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* BPMN-Elemente */
+.djs-shape {
+  fill: white !important;
+  stroke: black !important;
+  stroke-width: 1.5px !important;
+}
+
+.djs-shape.selected {
+  stroke: #1E88E5 !important;
+  stroke-width: 2px !important;
+}
+
+.djs-connection .djs-visual path {
+  stroke: black !important;
+  stroke-width: 1.5px !important;
+  fill: none !important;
+}
+
+.djs-connection.selected .djs-visual path {
+  stroke: #1E88E5 !important;
+  stroke-width: 2px !important;
+}
+
+/* Connection Marker */
+.djs-connection-marker {
+  fill: none;
+  stroke: #1E88E5;
+  stroke-width: 2px;
+}
+
+/* Connect Vorschau */
+.djs-connection-preview {
+  stroke: #999;
+  stroke-width: 1.5px;
+  stroke-dasharray: 4, 2;
+}
+
+/* Markers für das Verbinden */
+.djs-connect-marker {
+  fill: #1976D2;
+  stroke: none;
+}
+
+.djs-connect-hover {
+  fill: #90CAF9;
+}
+
+/* Context-Pad verbessert */
+.djs-context-pad {
+  position: absolute !important;
+  display: block !important; /* Wichtig: Immer anzeigen, wenn es vom Modeler eingeblendet wird */
+  pointer-events: auto !important;
+  background-color: white !important;
+  border-radius: 4px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  z-index: 100 !important;
+  padding: 2px !important;
+}
+
+/* Context-Pad Einträge */
+.djs-context-pad .entry {
+  width: 22px !important;
+  height: 22px !important;
+  margin: 2px !important;
+  display: inline-block !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  border-radius: 3px !important;
+  border: 1px solid transparent !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+  line-height: 22px !important;
+  color: #333 !important;
+}
+
+.djs-context-pad .entry:hover {
+  background-color: #f0f0f0 !important;
+  border-color: #ccc !important;
+}
+
+/* Popup Menu (Replace, Context) */
+.djs-popup {
+  position: absolute !important;
+  background: white !important;
+  border-radius: 2px !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !important;
+  z-index: 200 !important;
+  min-width: 200px !important;
+  cursor: default !important;
+  font-size: 14px !important;
+  display: block !important;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+}
+
+.djs-popup-header {
+  border-bottom: 1px solid #ddd !important;
+  padding: 8px 10px !important;
+  font-weight: bold !important;
+  color: #333 !important;
+  background-color: #f8f8f8 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.djs-popup-search {
+  margin: 8px !important;
+}
+
+.djs-popup-search input {
+  width: 100% !important;
+  height: 30px !important;
+  padding: 0 10px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 3px !important;
+  box-sizing: border-box !important;
+  font-size: 13px !important;
+}
+
+.djs-popup-body {
+  padding: 0 !important;
+  max-height: 300px !important;
+  overflow-y: auto !important;
+}
+
+.djs-popup .entry {
+  padding: 8px 10px !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  color: #333 !important;
+  white-space: nowrap !important;
+}
+
+.djs-popup .entry:hover {
+  background-color: #f0f0f0 !important;
+}
+
+.djs-popup .entry.active {
+  background-color: #e9f1fa !important;
+}
+
+/* BPMN Replace Menu und Icons */
+.djs-popup .entry[class*="bpmn-icon-"] {
+  padding-left: 40px !important;
+  background-position: 10px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px 20px !important;
+}
+
+.djs-popup .entry .djs-popup-label {
+  font-weight: normal !important;
+  margin-left: 5px !important;
+}
+
+.bpmn-icon-user-task,
+.bpmn-icon-service-task,
+.bpmn-icon-receive-task,
+.bpmn-icon-send-task,
+.bpmn-icon-manual-task,
+.bpmn-icon-business-rule-task,
+.bpmn-icon-script-task {
+  font-family: 'bpmn' !important;
+  font-size: 17px !important;
+  display: inline-block !important;
+  width: 22px !important;
+  height: 22px !important;
+  line-height: 1 !important;
+  speak: none !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  line-height: 1 !important;
+  /* Better Font Rendering */
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* Popup Menu Buttons (oben rechts) */
+.djs-popup-header .entry {
+  width: 22px !important;
+  height: 22px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border-radius: 3px !important;
+}
+
+.djs-popup-header .entry:hover {
+  background-color: #eee !important;
+}
+
+/* Styles für die Elemente im Popup */
+.djs-popup .entry[data-action="replace"] {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  color: #333 !important;
+  font-size: 13px !important;
+  position: relative !important;
+  padding-left: 32px !important;
+}
+
+.djs-popup .entry[data-action="replace"]::before {
+  font-family: 'bpmn' !important;
+  font-size: 18px !important;
+  position: absolute !important;
+  left: 8px !important;
+}
+
+/* Mobile-Anpassungen */
+@media (max-width: 768px) {
+  .djs-palette {
+    width: 36px !important;
+  }
+  
+  .djs-palette .entry {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 20px !important;
+    line-height: 20px !important;
+  }
+}
+
+/* Text-Zentrierung in BPMN-Elementen verbessern */
+.djs-label {
+  font-family: var(--bpmn-font-family) !important;
+  font-size: 12px !important;
+  fill: #333 !important;
+  color: #333 !important;
+  font-weight: normal !important;
+  paint-order: stroke !important;
+  stroke: none !important;
+  text-rendering: geometricPrecision !important;
+}
+
+/* Speziell für Text innerhalb von Tasks */
+.bpmn-label tspan,
+.djs-label tspan {
+  dominant-baseline: central !important;
+  alignment-baseline: middle !important;
+  text-anchor: middle !important;
+  font-family: var(--bpmn-font-family) !important;
+}
+
+/* Text im Task muss zentriert sein */
+[data-element-id*="Task"] .djs-label,
+.bpmn-icon-task ~ .djs-label,
+.bpmn-icon-task + text,
+.djs-label[data-label-id*="Task"] {
+  text-anchor: middle !important;
+  dominant-baseline: central !important;
+  alignment-baseline: middle !important;
+}
+
+/* Korrigierte Task-Text Positionierung */
+.djs-shape.bpmn-task text.djs-label,
+.djs-shape[data-element-id*="Task"] text.djs-label {
+  text-anchor: middle !important;
+  dominant-baseline: central !important;
+  dy: 0.25em !important;
+}
+
+.djs-shape text.djs-label {
+  font-weight: normal !important;
+  letter-spacing: 0.2px !important;
+  dominant-baseline: central !important;
+  text-anchor: middle !important;
+  dy: 0.3em !important;
+}
+
+/* SVG-spezifische Textanpassungen */
+.djs-container svg text.djs-label {
+  dominant-baseline: middle !important;
+  alignment-baseline: middle !important;
+  text-anchor: middle !important;
+}
+
+/* Korrektur für verschiedene Browser */
+@supports (-moz-appearance:none) {
+  .djs-container svg text.djs-label {
+    dy: 0.3em !important;
+  }
+}
+
+/* Spezifisch für Task-Elemente */
+.djs-shape[data-element-id*="Task"] text.djs-label,
+.djs-shape[data-shape-type="bpmn:Task"] text.djs-label {
+  dominant-baseline: middle !important;
+  dy: 0 !important;
+  alignment-baseline: middle !important;
+  text-anchor: middle !important;
+}
+
+/* Spezifisch für unseren Task_1 */
+[data-element-id="Task_1"] text.djs-label,
+.djs-shape[data-element-id="Task_1"] text.djs-label {
+  dominant-baseline: middle !important;
+  alignment-baseline: middle !important;
+  text-anchor: middle !important;
+  dy: 0 !important;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  font-weight: normal !important;
+  font-size: 12px !important;
+  fill: #333 !important;
+  stroke: none !important;
+}
+
+/* Textbearbeitung (Direktes Tippen) */
+.djs-direct-editing-content,
+.djs-direct-editing-parent {
+  background-color: white !important;
+  color: #333 !important;
+  border: 1px solid #ccc !important;
+  border-radius: 2px !important;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  font-size: 12px !important;
+  padding: 3px !important;
+  min-width: 100px !important;
+}
+
+.djs-direct-editing-content {
+  display: block !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+  color: #333 !important;
+  background-color: white !important;
+}
+
+/* Focus-Zustand für die Textbearbeitung */
+.djs-direct-editing-content:focus {
+  outline: none !important;
+  border: 1px solid #1976D2 !important;
+  box-shadow: 0 0 2px #1976D2 !important;
+  color: #333 !important;
+  background-color: white !important;
+}
+
+/* Cursor und Textselektion */
+.djs-direct-editing-content::selection {
+  background-color: #e3f2fd !important;
+  color: #333 !important;
+}
+
+/* Sicherstellen, dass alle Eingabefelder die korrekte Textfarbe haben */
+.djs-container input,
+.djs-container textarea,
+.djs-container [contenteditable="true"],
+.djs-container [contenteditable="plaintext-only"] {
+  color: #333 !important;
+  background-color: white !important;
+  caret-color: #333 !important;
+} 

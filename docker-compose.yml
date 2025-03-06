@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  # MongoDB Service
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=bpmn-editor
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - bpmn-network
+    command: mongod --auth
+
+  # BPMN Editor Service
+  bpmn-editor:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: yannickhildebrandt/bpmn-modeler-kws:latest
+    container_name: bpmn-editor
+    restart: always
+    ports:
+      - "3002:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://localhost:3002
+      - MONGODB_URI=mongodb://admin:password@mongodb:27017/bpmn-editor?authSource=admin
+    depends_on:
+      - mongodb
+    networks:
+      - bpmn-network
+
+  # MongoDB Admin UI
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_URL=mongodb://admin:password@mongodb:27017/admin?authSource=admin
+    networks:
+      - bpmn-network
+    depends_on:
+      - mongodb
+
+  # Optional: Proxy-Server für bessere Sicherheit und Performance
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: nginx
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx:/etc/nginx/conf.d
+  #     - ./certbot/conf:/etc/letsencrypt
+  #     - ./certbot/www:/var/www/certbot
+  #   networks:
+  #     - bpmn-network
+  #   depends_on:
+  #     - bpmn-editor
+
+networks:
+  bpmn-network:
+    driver: bridge
+
+volumes:
+  mongodb_data: 

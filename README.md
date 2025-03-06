@@ -1,15 +1,59 @@
-# Ansh & Riley Full-Stack Template
+# 3D Flight Simulator
 
-This is a full-stack template project for Software Composers to create  applications with AI.
+A web-based 3D flight simulator built with Next.js, React Three Fiber, and Three.js.
 
-## Getting started
-To create a new project, you go to `/paths`, choose from our list of Paths, and then use Cursor's Composer feature to quickly scaffold your project!
+## Features
 
-You can also edit the Path's prompt template to be whatever you like!
+- Interactive 3D environment with a flyable airplane
+- Dynamic camera that follows the airplane
+- Basic flight physics simulation
+- Keyboard controls for flying
+- Responsive design that works on desktop and mobile
+- Fullscreen mode for immersive experience
 
-## Technologies used
-This doesn't really matter, but is useful for the AI to understand more about this project. We are using the following technologies
-- React with Next.js 14 App Router
-- TailwindCSS
-- Firebase Auth, Storage, and Database
-- Multiple AI endpoints including OpenAI, Anthropic, and Replicate using Vercel's AI SDK
+## Controls
+
+- **W/S**: Pitch down/up
+- **A/D**: Roll left/right
+- **Q/E**: Yaw left/right
+- **Up/Down arrows**: Increase/decrease thrust
+
+## Technologies Used
+
+- Next.js 14 (App Router)
+- React Three Fiber
+- Three.js for 3D graphics
+- TypeScript
+- Tailwind CSS for UI
+
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies:
+```bash
+npm install
+```
+3. Run the development server:
+```bash
+npm run dev
+```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Future Improvements
+
+- Enhanced 3D models with textures
+- Improved terrain with realistic landscape
+- Multiple aircraft to choose from
+- Collision detection
+- Weather effects
+- Sound effects
+- Mobile touch controls
+
+## License
+
+MIT
+
+## Acknowledgements
+
+- Three.js team for their amazing 3D library
+- React Three Fiber for making Three.js integration with React seamless

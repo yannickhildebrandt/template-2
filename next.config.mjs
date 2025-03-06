@@ -32,6 +32,10 @@ const nextConfig = {
       },
     ];
   },
+  // Docker-Optimierungen: Standalone-Modus aktivieren
+  output: 'standalone',
+  // BPMN-Fonts und CSS korrekt verarbeiten
+  transpilePackages: ['bpmn-js'],
 };
 
 export default nextConfig;
