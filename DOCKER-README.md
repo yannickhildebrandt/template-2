@@ -1,73 +1,91 @@
-# BPMN-Editor Docker-Setup
+# Docker-Konfiguration für BPMN-Modeler
 
-Dieses Dokument enthält Anweisungen zur Verwendung des BPMN-Editors mit Docker.
+Diese Dokumentation beschreibt die Docker-Konfiguration für den BPMN-Modeler und erklärt, wie Sie die Anwendung mit Docker bereitstellen können.
 
 ## Voraussetzungen
 
-- Docker installiert (https://docs.docker.com/get-docker/)
-- Docker Compose installiert (https://docs.docker.com/compose/install/)
+- Docker installiert (Version 20.10.0 oder höher)
+- Docker Compose installiert (Version 2.0.0 oder höher)
 
 ## Schnellstart
 
-1. Repository klonen oder Dateien herunterladen
-2. Im Projektverzeichnis den folgenden Befehl ausführen:
+1. Repository klonen
+2. Docker-Container starten:
+   ```bash
+   docker-compose up -d
+   ```
+3. Zugriff auf die Anwendung unter http://localhost:3002
+4. Zugriff auf die MongoDB-Admin-Oberfläche unter http://localhost:8081
 
-```bash
-docker-compose up -d
-```
+## Docker-Konfiguration
 
-Der BPMN-Editor ist dann unter http://localhost:3000 verfügbar.
+Die `docker-compose.yml` Datei definiert drei Dienste:
 
-## Manueller Docker-Build
+1. **mongodb**: MongoDB-Datenbank für die Speicherung der BPMN-Modelle
+   - Port: 27017
+   - Umgebungsvariablen für Benutzername, Passwort und Datenbankname
+   - Persistentes Volume für Datenspeicherung
 
-Wenn Sie Docker Compose nicht verwenden möchten, können Sie den Container auch manuell bauen und starten:
+2. **bpmn-editor**: Die Next.js-Anwendung
+   - Port: 3002 (extern) -> 3000 (intern)
+   - Umgebungsvariablen für Produktionsumgebung und MongoDB-Verbindung
+   - Abhängigkeit von MongoDB
 
-```bash
-# Container bauen
-docker build -t bpmn-editor .
-
-# Container starten
-docker run -p 3000:3000 -d --name bpmn-editor bpmn-editor
-```
-
-## Container-Management
-
-### Container stoppen
-
-```bash
-docker-compose down
-```
-
-### Container neu starten
-
-```bash
-docker-compose restart
-```
-
-### Logs anzeigen
-
-```bash
-docker-compose logs -f
-```
+3. **mongo-express**: Web-basierte MongoDB-Verwaltungsoberfläche
+   - Port: 8081
+   - Umgebungsvariablen für Authentifizierung
+   - Abhängigkeit von MongoDB
 
 ## Anpassungen
 
-Die Docker-Konfiguration kann über folgende Dateien angepasst werden:
+### Dockerfile
 
-- `Dockerfile`: Haupt-Build-Datei für die Anwendung
-- `docker-compose.yml`: Definiert die Services und deren Konfiguration
-- `.dockerignore`: Definiert welche Dateien beim Build ignoriert werden
-- `next.config.mjs`: Enthält spezifische Next.js-Konfigurationen für Docker
+Das Dockerfile für den BPMN-Editor verwendet einen mehrstufigen Build-Prozess:
+1. Build-Phase: Kompiliert die Next.js-Anwendung
+2. Produktions-Phase: Erstellt ein schlankes Image mit nur den notwendigen Dateien
 
-## Produktionsumgebung
+### docker-compose.yml
 
-Für eine Produktionsumgebung empfehlen wir folgende zusätzliche Schritte:
+Sie können folgende Anpassungen vornehmen:
 
-1. Aktivieren Sie den auskommentierten NGINX-Service in der docker-compose.yml
-2. Konfigurieren Sie SSL-Zertifikate
-3. Passen Sie die NGINX-Konfiguration für Ihre Domain an
+- **Ports ändern**: Wenn Port 3002 oder 8081 bereits verwendet wird, können Sie diese in der `docker-compose.yml` ändern.
+- **Umgebungsvariablen**: Passwörter und Benutzernamen für MongoDB anpassen.
+- **Volumes**: Speicherort der MongoDB-Daten ändern.
+
+## Deployment auf Docker Hub
+
+Das Image ist auf Docker Hub unter `yannickhildebrandt/bpmn-modeler-kws:latest` verfügbar und kann mit folgendem Befehl heruntergeladen werden:
+
+```bash
+docker pull yannickhildebrandt/bpmn-modeler-kws:latest
+```
 
 ## Bekannte Probleme und Lösungen
 
-- Wenn der Container mit einem Fehler bezüglich der Node-Module startet, versuchen Sie, den Node_Modules-Ordner zu löschen und den Container neu zu bauen.
-- Fehler beim Zugriff auf die Anwendung können oft durch einen Blick in die Container-Logs (`docker-compose logs -f`) diagnostiziert werden. 
+### Problem: Node-Module-Fehler
+
+Wenn Sie Fehler bezüglich fehlender Node-Module erhalten, versuchen Sie:
+
+```bash
+docker-compose down
+docker-compose build --no-cache bpmn-editor
+docker-compose up -d
+```
+
+### Problem: MongoDB-Verbindungsfehler
+
+Überprüfen Sie die Umgebungsvariablen in der `docker-compose.yml` und stellen Sie sicher, dass die MongoDB-Verbindungszeichenfolge korrekt ist.
+
+### Logs anzeigen
+
+Um die Logs der Anwendung anzuzeigen:
+
+```bash
+docker logs bpmn-editor
+```
+
+Für MongoDB-Logs:
+
+```bash
+docker logs mongodb
+``` 

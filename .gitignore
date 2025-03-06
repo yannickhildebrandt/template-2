@@ -4,7 +4,6 @@
 /node_modules
 /.pnp
 .pnp.js
-.yarn/install-state.gz
 
 # testing
 /coverage
@@ -27,6 +26,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
@@ -35,4 +35,22 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.env
+# MongoDB data
+/data
+
+# Docker volumes
+/mongodb-data
+
+# IDE files
+.idea
+.vscode
+*.swp
+*.swo
+
+# Logs
+logs
+*.log
+
+# Build artifacts
+.cache
+dist
