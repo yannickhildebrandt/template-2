@@ -1,59 +1,63 @@
-# 3D Flight Simulator
+# BPMN-Modeler
 
-A web-based 3D flight simulator built with Next.js, React Three Fiber, and Three.js.
+Ein webbasierter BPMN-Modellierungseditor, entwickelt mit Next.js, bpmn-js und MongoDB.
 
 ## Features
 
-- Interactive 3D environment with a flyable airplane
-- Dynamic camera that follows the airplane
-- Basic flight physics simulation
-- Keyboard controls for flying
-- Responsive design that works on desktop and mobile
-- Fullscreen mode for immersive experience
+- Erstellen und Bearbeiten von BPMN-Diagrammen
+- Speichern von Modellen in einer MongoDB-Datenbank
+- Importieren und Exportieren von BPMN-XML
+- Organisation von Modellen in Ordnern
+- Responsive Design für Desktop und mobile Geräte
+- Einfache, benutzerfreundliche Oberfläche
 
-## Controls
-
-- **W/S**: Pitch down/up
-- **A/D**: Roll left/right
-- **Q/E**: Yaw left/right
-- **Up/Down arrows**: Increase/decrease thrust
-
-## Technologies Used
+## Technologien
 
 - Next.js 14 (App Router)
-- React Three Fiber
-- Three.js for 3D graphics
 - TypeScript
-- Tailwind CSS for UI
+- Tailwind CSS für das UI
+- bpmn-js als BPMN-Modellierungsengine
+- MongoDB als Datenbank
+- Docker für einfaches Deployment
 
-## Getting Started
+## Lokale Installation
 
-1. Clone the repository
-2. Install dependencies:
+1. Repository klonen
+2. Abhängigkeiten installieren:
 ```bash
 npm install
 ```
-3. Run the development server:
+3. Lokale Umgebungsvariablen in `.env.local` konfigurieren:
+```
+MONGODB_URI=mongodb://localhost:27017/bpmn-editor
+NEXT_PUBLIC_API_URL=http://localhost:3000
+```
+4. Entwicklungsserver starten:
 ```bash
 npm run dev
 ```
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+5. Im Browser [http://localhost:3000](http://localhost:3000) öffnen
 
-## Future Improvements
+## Docker-Deployment
 
-- Enhanced 3D models with textures
-- Improved terrain with realistic landscape
-- Multiple aircraft to choose from
-- Collision detection
-- Weather effects
-- Sound effects
-- Mobile touch controls
+Für ein einfaches Deployment kann Docker Compose verwendet werden:
 
-## License
+```bash
+docker-compose up -d
+```
+
+Weitere Informationen zur Docker-Konfiguration finden Sie in der [DOCKER-README.md](DOCKER-README.md).
+
+## Zugängliche Endpunkte
+
+- **BPMN-Editor**: http://localhost:3002 (oder konfigurierter Port)
+- **MongoDB Admin Interface**: http://localhost:8081
+
+## Authentifizierung für MongoDB
+
+- **Benutzername**: admin
+- **Passwort**: password (sollte in einer Produktionsumgebung geändert werden)
+
+## Lizenz
 
 MIT
-
-## Acknowledgements
-
-- Three.js team for their amazing 3D library
-- React Three Fiber for making Three.js integration with React seamless
